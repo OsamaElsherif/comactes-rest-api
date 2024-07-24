@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:comactes-rest-api}/data.db",
+            "name": "comactes"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
