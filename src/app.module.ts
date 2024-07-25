@@ -15,6 +15,7 @@ import { CartModule } from './cart/cart.module';
 import { Cart, CartItem } from './cart/cart.entity';
 import { NotificationsModule } from './notifications/notifications.module';
 import { Notification } from './notifications/notification.entity';
+import { PaginationModule } from './pagination/pagination.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -32,7 +33,7 @@ import { Notification } from './notifications/notification.entity';
         pass: "c10cc30381c14a"
       }
     }
-  }), UsersModule, AuthModule, ProductsModule, OrdersModule, CartModule, NotificationsModule],
+  }), UsersModule, AuthModule, ProductsModule, OrdersModule, CartModule, NotificationsModule, PaginationModule],
   controllers: [AppController],
   providers: [AppService],
 })

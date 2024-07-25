@@ -62,6 +62,7 @@ export class UsersController {
     return this.usersService.findOneByEmail(user.email);
   }
 
+  // forgot password
   @Get('password/forgot')
   async forgotPassword(@Body() body: {email: string, password: string}) {
     let updateUserDto: UpdateUserDto;
@@ -71,6 +72,7 @@ export class UsersController {
 
     return {message: 'Password changed successfully'};
   }
+  
   // delete user
   @UseGuards(JwtAuthGuard)
   @Delete('profile')
