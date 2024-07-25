@@ -22,4 +22,16 @@ export class PaginationService extends PageService {
             filter
         )
     }
+
+    // all users
+    async findAllUsersPaginated() {}
+
+    // all orders
+    async findAllOrdersPaginated() {}
+
+    // loged in user
+    async findOrdersPaginated() {}
+
+    // loged in user
+    async findCartItemsPaginated() {}
 }
