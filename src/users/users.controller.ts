@@ -62,6 +62,15 @@ export class UsersController {
     return this.usersService.findOneByEmail(user.email);
   }
 
+  @Get('password/forgot')
+  async forgotPassword(@Body() body: {email: string, password: string}) {
+    let updateUserDto: UpdateUserDto;
+    updateUserDto.password = body.password;
+    const user = await this.usersService.findOneByEmail(body.email);
+    await this.usersService.update(user.id, updateUserDto);
+
+    return {message: 'Password changed successfully'};
+  }
   // delete user
   @UseGuards(JwtAuthGuard)
   @Delete('profile')
