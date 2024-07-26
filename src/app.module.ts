@@ -17,12 +17,13 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { Notification } from './notifications/notification.entity';
 import { PaginationModule } from './pagination/pagination.module';
 import { FavoritesModule } from './favorites/favorites.module';
+import { Favorites } from './favorites/favorites.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'sqlite',
     database: 'data.db',
-    entities: [User, Product, Categoory, Order, OrderItem, Cart, CartItem, Notification],
+    entities: [User, Product, Categoory, Order, OrderItem, Cart, CartItem, Notification, Favorites],
     synchronize: true
   }),
   MailerModule.forRoot({

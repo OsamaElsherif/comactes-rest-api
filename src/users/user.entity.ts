@@ -1,4 +1,5 @@
 import { Cart } from 'src/cart/cart.entity';
+import { Favorites } from 'src/favorites/favorites.entity';
 import { Notification } from 'src/notifications/notification.entity';
 import { Order } from 'src/orders/order.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
@@ -52,6 +53,9 @@ export class User {
 
   @OneToMany(() => Notification, notification => notification.id)
   notifications: Notification[];
+
+  @OneToMany(() => Favorites, favorites => favorites.id)
+  favorites: Favorites[];
 
   // activated after the admin aproves the request
   @Column({ default: false })
