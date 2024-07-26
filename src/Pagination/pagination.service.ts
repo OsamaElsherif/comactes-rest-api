@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { PageService } from './page.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/products/product.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { GenericFilter } from 'src/interfaces/GenericFilter.interface';
 import { User } from 'src/users/user.entity';
 import { Order } from 'src/orders/order.entity';
+import { Favorites } from 'src/favorites/favorites.entity';
+import { IUser } from 'src/interfaces/User.interface';
 
 @Injectable()
 export class PaginationService extends PageService {
@@ -16,42 +18,66 @@ export class PaginationService extends PageService {
         private userRepository: Repository<User>,
         @InjectRepository(Order)
         private orderRepository: Repository<Order>,
+        @InjectRepository(Favorites)
+        private favoritesRepository: Repository<Favorites>
     ) {
         super();
     }
 
-    async findAllProductsPaginated( filter: GenericFilter) {
+    // find all products.
+    async findAllProductsPaginated( filter: GenericFilter & IUser) {
         const { ...params } = filter;
 
         return await this.paginate(
             this.productRepository,
-            filter
+            filter,
+            this.createWhereQuery(params)
         )
     }
 
-    // all users
-    async findAllUsersPaginated(filter: GenericFilter) {
+    // all users for admin only
+    async findAllUsersPaginated(filter: GenericFilter & IUser) {
         const { ...params } = filter;
 
         return await this.paginate(
             this.userRepository,
-            filter
+            filter,
+            this.createWhereQuery(params)
         )
     }
 
-    // all orders
-    async findAllOrdersPaginated(filter: GenericFilter) {
+    // all orders for admin only
+    async findAllOrdersPaginated(filter: GenericFilter & IUser) {
         const { ...params } = filter;
 
         return await this.paginate(
             this.orderRepository,
-            filter
+            filter,
+            this.createWhereQuery(params)
         )
     }
 
-    // loged in user
+    // loged in user find orders
     async findOrdersPaginated() {}
 
-    // loged in user
-    async findFavoriteProductsPaginated() {}
+    // loged in user find favorites
+    async findFavoriteProductsPaginated(filter: GenericFilter & IUser) {
+        const { ...params } = filter;
+
+        return await this.paginate(
+            this.favoritesRepository,
+            filter,
+            this.createWhereQuery(params)
+        )
+    }
+
+    private createWhereQuery(params: IUser) {
+        const where: any = {};
+
+        if (params.userId) {
+            where.user = ILike(`%${params.userId}%`)
+        }
+
+        return where;
+    }
 }
