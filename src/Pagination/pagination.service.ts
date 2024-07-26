@@ -25,24 +25,22 @@ export class PaginationService extends PageService {
     }
 
     // find all products.
-    async findAllProductsPaginated( filter: GenericFilter & IUser) {
+    async findAllProductsPaginated( filter: GenericFilter) {
         const { ...params } = filter;
 
         return await this.paginate(
             this.productRepository,
-            filter,
-            this.createWhereQuery(params)
+            filter
         )
     }
 
     // all users for admin only
-    async findAllUsersPaginated(filter: GenericFilter & IUser) {
+    async findAllUsersPaginated(filter: GenericFilter) {
         const { ...params } = filter;
 
         return await this.paginate(
             this.userRepository,
-            filter,
-            this.createWhereQuery(params)
+            filter
         )
     }
 
@@ -58,7 +56,15 @@ export class PaginationService extends PageService {
     }
 
     // loged in user find orders
-    async findOrdersPaginated() {}
+    async findOrdersPaginated(filter: GenericFilter & IUser) {
+        const { ...params } = filter;
+
+        return await this.paginate(
+            this.orderRepository,
+            filter,
+            this.createWhereQuery(params)
+        )
+    }
 
     // loged in user find favorites
     async findFavoriteProductsPaginated(filter: GenericFilter & IUser) {
