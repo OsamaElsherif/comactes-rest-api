@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, Req, UnauthorizedException, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PaginationService } from './pagination.service';
 import { GenericFilter } from 'src/interfaces/GenericFilter.interface';
 import { IUser } from 'src/interfaces/User.interface';
@@ -8,6 +8,7 @@ import { Roles } from 'src/auth/roles/roles.decorator';
 import { RolesGuard } from 'src/auth/roles/roles.guard';
 
 @Controller('pagination')
+@UsePipes(new ValidationPipe({ transform: true}))
 export class PaginationController {
     constructor(
         private readonly paginationService: PaginationService

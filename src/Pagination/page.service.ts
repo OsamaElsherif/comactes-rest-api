@@ -6,7 +6,7 @@ export class PageService {
         repository: Repository<T>,
         filter: GenericFilter,
         where?:  FindOptionsWhere<T>
-    ) { 
+    ) {
         return repository.findAndCount({
             skip: (filter.page - 1) * (Number.parseInt(String(filter.pageSize))),
             take: filter.pageSize,

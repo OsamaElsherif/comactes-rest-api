@@ -1,13 +1,13 @@
 import { Transform } from "class-transformer";
-import { IsNumber } from "class-validator";
+import { IsNumber, IsOptional } from "class-validator";
 import { toNumber } from "src/common/helper/cast.helper";
 
 export class GenericFilter {
-    @Transform(({value}) => toNumber(value, {default: 1, min: 1}))
+    @Transform(({value}) => toNumber(value, {min: 1}))
     @IsNumber()
-    public page: number;
+    public page: number = 1;
 
-    @Transform(({value}) => toNumber(value, {default: 5, min: 1, max: 10}))
+    @Transform(({value}) => toNumber(value, {min: 1, max: 40}))
     @IsNumber()
-    public pageSize: number;    
+    public pageSize: number = 15;
 }
