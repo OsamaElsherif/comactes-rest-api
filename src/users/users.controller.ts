@@ -62,8 +62,8 @@ export class UsersController {
     return this.usersService.findOneByEmail(user.email);
   }
 
-  // forgot password
-  @Get('password/forgot')
+  // forgot password - bug
+  @Patch('password/forgot')
   async forgotPassword(@Body() body: {email: string, password: string}) {
     let updateUserDto: UpdateUserDto;
     updateUserDto.password = body.password;
