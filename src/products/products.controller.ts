@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDTO } from './dto/create-product.dto';
 import { UpdateProductDTO } from './dto/update-product.dto';
@@ -6,14 +6,15 @@ import { CreateCategoryDTO } from './dto/create-category.dto';
 import { UpdateCategoryDTO } from './dto/update-category.dto';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { RolesGuard } from 'src/auth/roles/roles.guard';
+import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 
 @Controller('products')
 export class ProductsController {
     constructor(private readonly productsService: ProductsService) {}
 
-    @Post()
     @Roles('Admin')
-    @UseGuards(RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Post()
     createProduct(@Body() createProductDto: CreateProductDTO) {
         return this.productsService.createProduct(createProductDto);
     }
@@ -23,10 +24,9 @@ export class ProductsController {
         return this.productsService.findAllProducts();
     }
 
-    
-    @Post("categories")
     @Roles('Admin')
-    @UseGuards(RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Post("categories")
     createCategory(@Body() createCategoryDto: CreateCategoryDTO) {
         return this.productsService.createCategory(createCategoryDto);
     }
@@ -56,14 +56,14 @@ export class ProductsController {
     }
 
     @Roles('Admin')
-    @UseGuards(RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Patch("categories/:id")
     updateCategory(@Param("id") id: number, @Body() updateCategoryDto: UpdateCategoryDTO) {
         return this.productsService.updateCategory(id, updateCategoryDto);
     }
 
     @Roles('Admin')
-    @UseGuards(RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Delete("categories/:id")
     deleteCategory(@Param("id") id: number) {
         return this.productsService.removeCategory(id);
@@ -75,14 +75,14 @@ export class ProductsController {
     }
 
     @Roles('Admin')
-    @UseGuards(RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Patch(":id")
     updateProduct(@Param("id") id: number, @Body() updateProductDto: UpdateProductDTO) {
         return this.productsService.updateProduct(id, updateProductDto);
     }
 
     @Roles('Admin')
-    @UseGuards(RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Delete(":id")
     deleteProduct(@Param("id") id: number) {
         return this.productsService.removeProduct(id);
