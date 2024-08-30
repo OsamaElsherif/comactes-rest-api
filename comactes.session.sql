@@ -1,0 +1,30 @@
+-- INSERT INTO user (
+--     email,
+--     phoneNumber,
+--     address,
+--     workType,
+--     companyType,
+--     employeesNumber,
+--     jobTitle,
+--     password,
+--     role,
+--     profile,
+--     static,
+--     createdAt,
+--     updatedAt
+--   )
+-- VALUES (
+--     'omar@gmail.com',
+--     2011123123123,
+--     'Alex - Egypt',
+--     'Type1',
+--     'Type1',
+--     'Range1',
+--     'Ceo',
+--     'password',
+--     'User',
+--     '',
+--     1,
+--     DATE(),
+--     DATE()
+--   );

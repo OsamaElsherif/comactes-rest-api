@@ -26,6 +26,10 @@ export class CreateProductDTO {
     features: string;
 
     @IsNotEmpty()
+    @IsString()
+    image: string;
+
+    @IsNotEmpty()
     @IsJSON()
     attachments: JSON;
 

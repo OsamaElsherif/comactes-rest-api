@@ -18,6 +18,8 @@ import { Notification } from './notifications/notification.entity';
 import { PaginationModule } from './pagination/pagination.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { Favorites } from './favorites/favorites.entity';
+import { FilesController } from './files/files.controller';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -35,8 +37,8 @@ import { Favorites } from './favorites/favorites.entity';
         pass: "c10cc30381c14a"
       }
     }
-  }), UsersModule, AuthModule, ProductsModule, OrdersModule, CartModule, NotificationsModule, PaginationModule, FavoritesModule],
-  controllers: [AppController],
+  }), UsersModule, AuthModule, ProductsModule, OrdersModule, CartModule, NotificationsModule, PaginationModule, FavoritesModule, FilesModule],
+  controllers: [AppController, FilesController],
   providers: [AppService],
 })
 export class AppModule {}

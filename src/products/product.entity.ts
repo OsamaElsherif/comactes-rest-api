@@ -31,6 +31,9 @@ export class Product {
     delivery: number;
 
     @Column()
+    image: string;
+    
+    @Column()
     deliveryDuration: string;
 
     @ManyToOne(() => Categoory, category => category.products)
