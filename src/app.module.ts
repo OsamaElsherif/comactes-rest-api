@@ -15,7 +15,7 @@ import { CartModule } from './cart/cart.module';
 import { Cart, CartItem } from './cart/cart.entity';
 import { NotificationsModule } from './notifications/notifications.module';
 import { Notification } from './notifications/notification.entity';
-import { PaginationModule } from './pagination/pagination.module';
+import { PaginationModule } from './Pagination/pagination.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { Favorites } from './favorites/favorites.entity';
 import { FilesController } from './files/files.controller';

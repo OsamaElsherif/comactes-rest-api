@@ -32,8 +32,8 @@ export class NotificationsService {
         return this.notificationRepository.find({where: { user: { id: userId } } })
     } 
 
-    async markAsRead(notificationId: number): Promise<Notification> {
-        const notifiaction = await this.notificationRepository.findOne({where: { id: notificationId }});
+    async markAsRead(userId: number, notificationId: number): Promise<Notification> {
+        const notifiaction = await this.notificationRepository.findOne({where: { id: notificationId, user: { id: userId } }});
 
         if (!notifiaction) {
             throw new NotFoundException('Notification not found');

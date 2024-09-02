@@ -18,8 +18,9 @@ export class OrdersService {
         private productsService: ProductsService
     ) {}
 
-    async createOrder(createOrderDto: CreateOrderDTO): Promise<Order> {
-        const {userId, items} = createOrderDto;
+    async createOrder(userId: number, createOrderDto: CreateOrderDTO): Promise<Order> {
+        userId = userId;
+        const {items} = createOrderDto;
 
         const user = await this.usersService.findOneById(userId);
 
@@ -57,12 +58,12 @@ export class OrdersService {
         return this.ordersRepository.save(order);
     }
     
-    async findAllOrders(): Promise<Order[]> {
-        return this.ordersRepository.find({ relations: ['user', 'items', 'items.product']});
+    async findAllOrders(userId: number): Promise<Order[]> {
+        return this.ordersRepository.find({ where: {user: { id: userId }}, relations: ['user', 'items', 'items.product']});
     }
     
-    async findOrderById(id: number): Promise<Order> {
-        const order = await this.ordersRepository.findOne({where: {id}, relations: ['user', 'items', 'items.product']});
+    async findOrderById(userId: number, id: number): Promise<Order> {
+        const order = await this.ordersRepository.findOne({where: {id, user: {id: userId}}, relations: ['user', 'items', 'items.product']});
 
         if (!order) {
             throw new NotFoundException("Order not found");
@@ -71,8 +72,8 @@ export class OrdersService {
         return order;
     }
     
-    async updateOrderStatus(id: number, updateOrderStatusDto: UpdateOtderStatusDTO): Promise<Order> {
-        const order = await this.findOrderById(id);
+    async updateOrderStatus(userId: number, id: number, updateOrderStatusDto: UpdateOtderStatusDTO): Promise<Order> {
+        const order = await this.findOrderById(userId, id);
 
         if (!order) {
             throw new NotFoundException("Order not found");
@@ -83,8 +84,8 @@ export class OrdersService {
         return this.ordersRepository.save(order);
     }
     
-    async removeOrder(id: number): Promise<void> {
-        const order = await this.findOrderById(id);
+    async removeOrder(userId: number, id: number): Promise<void> {
+        const order = await this.findOrderById(userId, id);
         
         if (!order) {
             throw new NotFoundException("Order not found");

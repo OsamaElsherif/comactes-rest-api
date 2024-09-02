@@ -99,7 +99,7 @@ export class CartService {
         const order: CreateOrderDTO = {userId, items:[]};
         cart.items.forEach(item => order.items.push({productId: item.product.id, quantity: item.quantity}));
 
-        return await this.ordersService.createOrder(order);
+        return await this.ordersService.createOrder(userId, order);
     }
 
     async clearCart(userId: number): Promise<void> {
