@@ -26,6 +26,7 @@ export class NotificationsService {
 
         const notification = this.notificationRepository.create(createNotificationDto);
         notification.user = user;
+        
         return this.notificationRepository.save(notification);
     }
 
