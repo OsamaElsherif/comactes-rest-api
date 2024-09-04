@@ -18,13 +18,14 @@ export class NotificationsService {
     // in app notifications
     async createInAppNotification(createNotificationDto: CreateNotificationDTO): Promise<Notification> {
         const userId = createNotificationDto.userId;
-        const user = this.usersService.findOneById(userId);
+        const user = await this.usersService.findOneById(userId);
 
         if (!user) {
             throw new NotFoundException("User not found");
         }
 
         const notification = this.notificationRepository.create(createNotificationDto);
+        notification.user = user;
         return this.notificationRepository.save(notification);
     }
 
