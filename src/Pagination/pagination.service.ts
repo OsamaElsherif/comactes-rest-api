@@ -67,6 +67,7 @@ export class PaginationService extends PageService {
     }
 
     // loged in user find favorites
+    // !Bug : doesn't return the product map.
     async findFavoriteProductsPaginated(filter: GenericFilter & IUser) {
         const { ...params } = filter;
 
