@@ -90,8 +90,21 @@ export class CartService {
         return this.cartRepository.save(cart);
     }
 
-    async getCartSummery(userId: number): Promise<Cart> {
-        return await this.findOneOrCreate(userId);
+    async getCartSummery(userId: number) {
+        const cart = await this.findOneOrCreate(userId);
+        const total = () => {
+            let t = 0;
+            cart.items.forEach(item => {
+                const q = item.quantity;
+                const pp = item.product.price;
+                t += q * pp;
+            });
+            return t;
+        }
+        return {
+            "cart": cart,
+            "total": total()
+        }
     }
 
     async checkout(userId: number): Promise<Order> {
