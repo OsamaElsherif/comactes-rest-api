@@ -106,6 +106,7 @@ export class CartService {
             "total": total()
         }
     }
+    
 
     async checkout(userId: number): Promise<Order> {
         const cart = await this.findOneOrCreate(userId)
