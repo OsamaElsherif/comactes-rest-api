@@ -23,6 +23,7 @@ import { FilesModule } from './files/files.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import filesystem  from './config/filesystem';
 import { StorageModule } from '@squareboat/nest-storage';
+import { Address } from './users/address.entity';
 
 @Module({
   imports: 
@@ -42,7 +43,7 @@ import { StorageModule } from '@squareboat/nest-storage';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'data.db',
-      entities: [User, Product, Categoory, Order, OrderItem, Cart, CartItem, Notification, Favorites],
+      entities: [Address, User, Product, Categoory, Order, OrderItem, Cart, CartItem, Notification, Favorites],
       synchronize: true
     }),
     MailerModule.forRoot({

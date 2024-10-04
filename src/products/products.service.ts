@@ -116,7 +116,8 @@ export class ProductsService {
     }
 
     async removeCategory(id: number): Promise<void> {
-        const category = await this.findCategoryById(id);
+        const category = await this.categoryRepository.findOne({ where: { id } });
+        console.log(category);
         await this.categoryRepository.remove(category);
     } 
 }

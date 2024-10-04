@@ -10,6 +10,9 @@ export class Product {
     name: string;
 
     @Column("decimal")
+    offer: number;
+
+    @Column("decimal")
     price: number;
 
     @Column("text")

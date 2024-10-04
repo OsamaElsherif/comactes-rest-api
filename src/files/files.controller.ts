@@ -13,9 +13,10 @@ export class FilesController {
     async getImages(@Req() req: IUserRequest, @Param('imageName') imagename: string) {
         // const userId = req.user.id;
         const image =  await this.filesService.getImages(1, imagename);   
-        const imgData = new Blob([image.buffer as BlobPart], { type: 'application/octet-binary' });
-        const link = URL.createObjectURL(imgData);
-    
+        const binary = Buffer.from(image);
+        const imgData = new Blob([binary.buffer as BlobPart], { type: 'application/octet-binary' });
+        let link = URL.createObjectURL(imgData);
+
         return `<img src="${link}" />`;
     }
 

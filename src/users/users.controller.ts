@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Patch, Delete, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Delete, UseGuards, Req, UnauthorizedException, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,6 +7,8 @@ import { IUserRequest } from 'src/interfaces/IUserRequest.i';
 import { AuthService } from '../auth/auth.service';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { RolesGuard } from 'src/auth/roles/roles.guard';
+import { createAddressDto } from './dto/create-address.dto';
+import { UpdateAdderssDto } from './dto/update-address.dto';
 
 @Controller('users')
 export class UsersController {
@@ -50,7 +52,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getProfile(@Req() req: IUserRequest) {
-    return req.user;
+    return this.usersService.findOneById(req.user.id);
   }
 
   // update user data
@@ -62,6 +64,22 @@ export class UsersController {
     return this.usersService.findOneByEmail(user.email);
   }
 
+  // adding a new address for a user
+  @UseGuards(JwtAuthGuard)
+  @Patch("/profile/address/add")
+  async addAddress(@Req() req: IUserRequest, @Body() createAddressDto: createAddressDto) {
+    const user = req.user;
+    return this.usersService.addAddress(createAddressDto, user);
+  }
+
+  // updating an address for the user
+  @UseGuards(JwtAuthGuard)
+  @Patch("/profile/address/updae/:id")
+  async updateAddress(@Param('id') id: number, @Req() req: IUserRequest, @Body() updateAddressDto: UpdateAdderssDto) {
+    const user = req.user;
+    return this.usersService.updateAddress(updateAddressDto, user, id);
+  }
+  
   // forgot password - bug
   @Patch('password/forgot')
   async forgotPassword(@Body() body: {email: string, password: string}) {

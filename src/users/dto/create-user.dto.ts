@@ -1,16 +1,20 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsPhoneNumber, IsString, MinLength } from 'class-validator';
 import { workTypeEnum, companyTypeEnum, employeesNumberEnum, jobTitleEnum } from './users.enum';
+import { createAddressDto } from './create-address.dto';
 
 export class CreateUserDto {
   @IsEmail()
   email: string;
 
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
   @IsPhoneNumber()
   phoneNumber: number;
 
-  @IsString()
   @IsNotEmpty()
-  address: string;
+  address: createAddressDto;
 
   @IsEnum(workTypeEnum)
   @IsNotEmpty()

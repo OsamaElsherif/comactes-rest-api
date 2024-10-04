@@ -9,6 +9,9 @@ export class CreateProductDTO {
     @IsNumber()
     price: number;
 
+    @IsNumber()
+    offer: number;
+
     @IsNotEmpty()
     @IsString()
     description: string;

@@ -2,22 +2,27 @@ import { Cart } from 'src/cart/cart.entity';
 import { Favorites } from 'src/favorites/favorites.entity';
 import { Notification } from 'src/notifications/notification.entity';
 import { Order } from 'src/orders/order.entity';
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from 'typeorm';
+import { Address } from './address.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // email or username is accepted
+  // email
   @Column({ unique: true })
   email: string;
+
+  // username
+  @Column({ unique: true })
+  username: string;
 
   @Column()
   phoneNumber: number;
 
-  @Column()
-  address: string;
+  @OneToMany(() => Address, address => address.user)
+  addresses: Address[];
 
   // should be a value from worktype table
   @Column()
