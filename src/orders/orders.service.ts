@@ -6,6 +6,7 @@ import { UsersService } from 'src/users/users.service';
 import { ProductsService } from 'src/products/products.service';
 import { CreateOrderDTO } from './dto/create-order.dto';
 import { UpdateOtderStatusDTO } from './dto/update-order-status.dto';
+import { Address } from 'src/users/address.entity';
 
 @Injectable()
 export class OrdersService {
@@ -14,13 +15,14 @@ export class OrdersService {
         private ordersRepository: Repository<Order>,
         @InjectRepository(OrderItem)
         private orderItemsRepository: Repository<OrderItem>,
+        private addressRepository: Repository<Address>,
         private usersService: UsersService,
         private productsService: ProductsService
     ) {}
 
     async createOrder(userId: number, createOrderDto: CreateOrderDTO): Promise<Order> {
         userId = userId;
-        const {items} = createOrderDto;
+        const {items, addressId} = createOrderDto;
 
         const user = await this.usersService.findOneById(userId);
 
@@ -53,6 +55,7 @@ export class OrdersService {
             status: "placed",
             total,
             items: orderItems,
+            address: await this.addressRepository.findOne({where: { id: addressId }})
         });
 
         return this.ordersRepository.save(order);

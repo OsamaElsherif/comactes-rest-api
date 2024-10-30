@@ -39,10 +39,10 @@ export class CartController {
 
     @Post("checkout")
     @UseGuards(JwtAuthGuard)
-    async checkout(@Req() req: IUserRequest) {
+    async checkout(@Req() req: IUserRequest, @Param('address_id') addressId: number) {
         const userId = req.user.id;
         // order placement
-        await this.cartService.checkout(userId);
+        await this.cartService.checkout(userId, addressId);
         // order payment goes here
 
         await this.cartService.clearCart(userId);

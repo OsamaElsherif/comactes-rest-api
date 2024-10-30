@@ -66,7 +66,7 @@ export class UsersController {
 
   // adding a new address for a user
   @UseGuards(JwtAuthGuard)
-  @Patch("/profile/address/add")
+  @Post("/profile/address/add")
   async addAddress(@Req() req: IUserRequest, @Body() createAddressDto: createAddressDto) {
     const user = req.user;
     return this.usersService.addAddress(createAddressDto, user);

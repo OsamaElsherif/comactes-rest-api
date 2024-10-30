@@ -19,4 +19,7 @@ export class CreateOrderDTO {
     @IsNumber()
     @ArrayNotEmpty()
     items: OrderItemDTO[];
+
+    @IsNumber()
+    addressId: number;
 }

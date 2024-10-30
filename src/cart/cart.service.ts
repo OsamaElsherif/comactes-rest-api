@@ -108,9 +108,9 @@ export class CartService {
     }
     
 
-    async checkout(userId: number): Promise<Order> {
+    async checkout(userId: number, addressId: number): Promise<Order> {
         const cart = await this.findOneOrCreate(userId)
-        const order: CreateOrderDTO = {userId, items:[]};
+        const order: CreateOrderDTO = {userId, items:[], addressId};
         cart.items.forEach(item => order.items.push({productId: item.product.id, quantity: item.quantity}));
 
         return await this.ordersService.createOrder(userId, order);
